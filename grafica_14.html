@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfica 14 - Énfasis de Fuente</title>
+    <style>
+        /* Estilos Generales (Reutilizados de las gráficas anteriores para consistencia) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .chart-page-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Estilo del Encabezado y Pregunta */
+        .question-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .question-header h3 {
+            font-size: 1.2em;
+            margin: 0;
+            color: #333;
+        }
+
+        .question-header p {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Contenedor del Gráfico y Leyenda */
+        .chart-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* Estilos del Gráfico Circular */
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            /* **LA MAGIA DEL GRÁFICO 14 (40%, 35%, 20%, 5%)** */
+            background: conic-gradient(
+                /* 40% - Totalmente de acuerdo - Azul */
+                #4285F4 0deg 144deg, /* 360 * 0.40 = 144 */
+                /* 35% - De acuerdo - Rojo */
+                #DB4437 144deg 270deg, /* 144 + (360 * 0.35) = 270 */
+                /* 20% - Neutral - Naranja */
+                #F4B400 270deg 342deg, /* 270 + (360 * 0.20) = 342 */
+                /* 5% - En desacuerdo - Verde */
+                #0F9D58 342deg 360deg /* 342 + (360 * 0.05) = 360 */
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Posicionamiento de las etiquetas de porcentaje */
+        .chart-label {
+            position: absolute;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Coordenadas para 40% (Azul) - Aproximadamente 72deg */
+        .label-40-blue {
+            transform: translate(calc(250px / 2 * cos(72deg)) - 50%, calc(250px / 2 * sin(72deg)) - 50%);
+            top: 50%;
+            left: 50%;
+            margin-left: 100px; 
+            margin-top: 50px; 
+        }
+
+        /* Coordenadas para 35% (Rojo) - Aproximadamente 207deg */
+        .label-35-red {
+            transform: translate(calc(250px / 2 * cos(207deg)) - 50%, calc(250px / 2 * sin(207deg)) - 50%);
+            top: 50%;
+            left: 50%;
+            margin-left: -110px;
+            margin-top: -30px;
+        }
+
+        /* Coordenadas para 20% (Naranja) - Aproximadamente 306deg */
+        .label-20-orange {
+            transform: translate(calc(250px / 2 * cos(306deg)) - 50%, calc(250px / 2 * sin(306deg)) - 50%);
+            top: 50%;
+            left: 50%;
+            margin-left: 50px;
+            margin-top: -100px;
+            color: black;
+        }
+        
+        /* Coordenadas para 5% (Verde) - Aproximadamente 351deg (Arriba a la derecha, muy cerca del borde) */
+        .label-05-green {
+            transform: translate(calc(250px / 2 * cos(351deg)) - 50%, calc(250px / 2 * sin(351deg)) - 50%);
+            top: 50%;
+            left: 50%;
+            margin-left: 120px;
+            margin-top: -10px;
+            color: black; 
+        }
+
+        /* Estilos de la Leyenda (Lado derecho) */
+        .legend {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            min-width: 200px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+        }
+
+        /* Definición de colores para la Leyenda */
+        .color-blue { background-color: #4285F4; }
+        .color-red { background-color: #DB4437; }
+        .color-orange { background-color: #F4B400; }
+        .color-green { background-color: #0F9D58; } 
+        .color-purple { background-color: #673AB7; } 
+
+        /* Botón de regreso */
+        .back-button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chart-page-container">
+
+    <div class="question-header">
+        <h3>¿Se utilizan distintos pesos (bold, regular, light) para crear énfasis en lugar de solo cambiar el tamaño?</h3>
+        <p>20 respuestas</p>
+    </div>
+
+    <div class="chart-content">
+        
+        <div class="pie-chart">
+            <span class="chart-label label-40-blue">40%</span>
+            <span class="chart-label label-35-red">35%</span>
+            <span class="chart-label label-20-orange">20%</span>
+            <span class="chart-label label-05-green">5%</span>
+        </div>
+
+        <ul class="legend">
+            <li class="legend-item">
+                <span class="legend-color color-blue"></span> Totalmente de acuerdo
+            </li>
+            <li class="legend-item">
+                <span class="legend-color color-red"></span> De acuerdo
+            </li>
+            <li class="legend-item">
+                <span class="legend-color color-orange"></span> Neutral
+            </li>
+            <li class="legend-item">
+                <span class="legend-color color-green"></span> En desacuerdo
+            </li>
+            <li class="legend-item">
+                <span class="legend-color color-purple"></span> Totalmente en desacuerdo
+            </li>
+        </ul>
+    </div>
+    
+    <div class="back-button-container">
+        <a href="menu_graficas.html" class="back-button">
+            Regresar al Menú de Gráficas
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
